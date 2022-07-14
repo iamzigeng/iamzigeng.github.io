@@ -99,19 +99,47 @@
 </ul>
 <h3 id="几何阶段（Geometry-Stage）GPU"><a href="#几何阶段（Geometry-Stage）GPU" class="headerlink" title="几何阶段（Geometry Stage）GPU"></a>几何阶段（Geometry Stage）GPU</h3><p><strong>主要负责和每个渲染图元打交道，进行逐顶点、逐多边形的操作。</strong><br>可以根据功能划分为以下几个阶段：</p>
 <ul>
-<li>模型视点变换（Model &amp; View Transform）</li>
-<li>顶点着色（Vertex Shading）</li>
-<li>投影（Projection）</li>
-<li>裁剪（Clipping)</li>
-<li>屏幕映射（Screen Mapping）</li>
+<li>模型与视图变换（Model &amp; View Transform）<blockquote>
+<p>模型变换的目的是将模型变换到适合渲染的空间当中；而视图变换则是将摄像机放置于坐标原点，以方便后续步骤的操作。</p>
+</blockquote>
+</li>
+<li>顶点着色（Vertex Shading）<blockquote>
+<p>确定模型上的顶点处材质的光照效果。</p>
+</blockquote>
+</li>
+<li>投影（Projection）<blockquote>
+<p>投影阶段是将模型从三维空间投射到二维空间的过程。</p>
+</blockquote>
+</li>
+<li>裁剪（Clipping)<blockquote>
+<p>对位于视体内部的图元进行裁剪操作。</p>
+</blockquote>
+</li>
+<li>屏幕映射（Screen Mapping）<blockquote>
+<p>将之前步骤得到的坐标映射到对应的屏幕坐标系上。</p>
+</blockquote>
+</li>
 </ul>
 <h3 id="光栅化阶段（Rasterizer-Stage）GPU"><a href="#光栅化阶段（Rasterizer-Stage）GPU" class="headerlink" title="光栅化阶段（Rasterizer Stage）GPU"></a>光栅化阶段（Rasterizer Stage）GPU</h3><p>使用几何阶段传递的数据来产生屏幕上的像素，并渲染出最终的图像。<br>重要目标：计算每个图元覆盖了哪些像素，以及为这些像素计算它们的颜色。<br>可以根据功能划分为以下几个阶段：</p>
 <ul>
-<li>三角形设定（Triangle Setup）</li>
-<li>三角形遍历（Triangle Traversal）</li>
-<li>像素着色（Pixel Shading）</li>
-<li>融合（Merging)</li>
+<li>三角形设定（Triangle Setup）<blockquote>
+<p>主要计算三角形表面的差异和三角形表面的其他相关数据。</p>
+</blockquote>
+</li>
+<li>三角形遍历（Triangle Traversal）<blockquote>
+<p>找到哪些采样点或者像素在三角形中的过程。</p>
+</blockquote>
+</li>
+<li>像素着色（Pixel Shading）<blockquote>
+<p>计算所有需要逐个像素计算操作的过程。</p>
+</blockquote>
+</li>
+<li>融合（Merging)<blockquote>
+<p>合成当前储存于缓冲器中的由之前的像素着色阶段产生的片段颜色。（深度测试、aplha测试以及模板测试也在此阶段进行）</p>
+</blockquote>
+</li>
 </ul>
+<p>其中，像素着色、融合这两个阶段在Opengl中的说法是<strong>片元着色器（Fragment Shader）</strong>以及<strong>逐片元操作（Per-Fragment Operations）</strong><br><img src="/images/%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/GPU%E7%AE%A1%E7%BA%BF.png" alt="GPU实现的渲染管线"><br>绿色：完全可编程<br>黄色：可配置但不可编程<br>蓝色：完全固定</p>
 
       
     </div>
